@@ -77,15 +77,16 @@ function CreatePage() {
     setUsernameError(null);
     setFormError(null);
 
+    const fail = (message: string) => {
+      setFormError(message);
+      toast.error(message);
+    };
+
     if (!rules.length) return fail("Password must contain at least 6 characters.");
     if (!rules.upper) return fail("Password must contain at least one uppercase character.");
     if (!rules.numeric) return fail("Password must contain at least one numeric value.");
     if (!matches) return fail("Passwords do not match.");
 
-    function fail(message: string) {
-      setFormError(message);
-      toast.error(message);
-    }
 
     setStatus("checking");
     try {
