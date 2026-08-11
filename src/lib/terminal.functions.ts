@@ -1,35 +1,18 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
 
-const credentials = z.object({
-  username: z.string().trim().min(3).max(40),
-  password: z.string().min(1).max(200),
-});
-
-const createSchema = credentials.extend({
-  confirmPassword: z.string().min(1).max(200),
-  terminalName: z.string().trim().min(2).max(60),
-  displayName: z.string().trim().max(40).optional(),
-});
-
-const sessionSchema = z.object({
-  terminalId: z.string().uuid(),
-  memberId: z.string().uuid(),
-});
-
-export type TerminalSession = {
-  terminalId: string;
-  memberId: string;
-  terminalName: string;
-  displayName: string;
-  ownerUsername: string;
-  isOwner: boolean;
-};
+import {
+  createSchema,
+  fileLinkSchema,
+  joinSchema,
+  messageSchema,
+  sessionSchema,
+  uploadSchema,
+  usernameSchema,
+  type TerminalSession,
+} from "./terminal.schemas";
 
 export const checkUsername = createServerFn({ method: "POST" })
-  .inputValidator((data: { username: string }) =>
-    z.object({ username: z.string().trim().min(1).max(40) }).parse(data),
-  )
+  .inputValidator((data: unknown) => usernameSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row } = await supabaseAdmin
@@ -63,7 +46,8 @@ export const createTerminal = createServerFn({ method: "POST" })
       return {
         ok: false as const,
         code: "username_taken" as const,
-        message: "Username already exists. Please choose another username or join your existing terminal.",
+        message:
+          "Username already exists. Please choose another username or join your existing terminal.",
       };
     }
 
@@ -79,10 +63,15 @@ export const createTerminal = createServerFn({ method: "POST" })
         return {
           ok: false as const,
           code: "username_taken" as const,
-          message: "Username already exists. Please choose another username or join your existing terminal.",
+          message:
+            "Username already exists. Please choose another username or join your existing terminal.",
         };
       }
-      return { ok: false as const, code: "error" as const, message: "Could not create the terminal. Try again." };
+      return {
+        ok: false as const,
+        code: "error" as const,
+        message: "Could not create the terminal. Please try again.",
+      };
     }
 
     const displayName = data.displayName?.trim() || data.username;
@@ -112,9 +101,7 @@ export const createTerminal = createServerFn({ method: "POST" })
   });
 
 export const joinTerminal = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) =>
-    credentials.extend({ displayName: z.string().trim().max(40).optional() }).parse(data),
-  )
+  .inputValidator((data: unknown) => joinSchema.parse(data))
   .handler(async ({ data }) => {
     const { verifyPassword } = await import("./terminal.server");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -127,13 +114,11 @@ export const joinTerminal = createServerFn({ method: "POST" })
 
     const valid = terminal ? await verifyPassword(data.password, terminal.password_hash) : false;
     if (!terminal || !valid) {
-      return {
-        ok: false as const,
-        message: "Terminal not found or credentials are incorrect.",
-      };
+      return { ok: false as const, message: "Terminal not found or credentials are incorrect." };
     }
 
-    const displayName = data.displayName?.trim() || `Guest-${Math.floor(1000 + Math.random() * 9000)}`;
+    const displayName =
+      data.displayName?.trim() || `Guest-${Math.floor(1000 + Math.random() * 9000)}`;
     const { data: member } = await supabaseAdmin
       .from("terminal_members")
       .insert({ terminal_id: terminal.id, display_name: displayName, is_owner: false })
@@ -159,21 +144,10 @@ export const joinTerminal = createServerFn({ method: "POST" })
     };
   });
 
-async function requireMember(terminalId: string, memberId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data: member } = await supabaseAdmin
-    .from("terminal_members")
-    .select("id, display_name, terminal_id")
-    .eq("id", memberId)
-    .eq("terminal_id", terminalId)
-    .maybeSingle();
-  if (!member) throw new Error("Not connected to this terminal.");
-  return { supabaseAdmin, member };
-}
-
 export const getWorkspace = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => sessionSchema.parse(data))
   .handler(async ({ data }) => {
+    const { requireMember } = await import("./terminal.server");
     const { supabaseAdmin } = await requireMember(data.terminalId, data.memberId);
     await supabaseAdmin
       .from("terminal_members")
@@ -181,7 +155,11 @@ export const getWorkspace = createServerFn({ method: "POST" })
       .eq("id", data.memberId);
 
     const [terminal, members, messages, files] = await Promise.all([
-      supabaseAdmin.from("terminals").select("id, name, owner_username, created_at").eq("id", data.terminalId).single(),
+      supabaseAdmin
+        .from("terminals")
+        .select("id, name, owner_username, created_at")
+        .eq("id", data.terminalId)
+        .single(),
       supabaseAdmin
         .from("terminal_members")
         .select("id, display_name, is_owner, last_seen")
@@ -204,7 +182,9 @@ export const getWorkspace = createServerFn({ method: "POST" })
     return {
       terminal: terminal.data,
       members: (members.data ?? []).map((m) => ({
-        ...m,
+        id: m.id,
+        display_name: m.display_name,
+        is_owner: m.is_owner,
         online: new Date(m.last_seen).getTime() > cutoff,
       })),
       messages: messages.data ?? [],
@@ -213,10 +193,9 @@ export const getWorkspace = createServerFn({ method: "POST" })
   });
 
 export const sendMessage = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) =>
-    sessionSchema.extend({ body: z.string().trim().min(1).max(2000) }).parse(data),
-  )
+  .inputValidator((data: unknown) => messageSchema.parse(data))
   .handler(async ({ data }) => {
+    const { requireMember } = await import("./terminal.server");
     const { supabaseAdmin, member } = await requireMember(data.terminalId, data.memberId);
     await supabaseAdmin.from("terminal_messages").insert({
       terminal_id: data.terminalId,
@@ -227,16 +206,9 @@ export const sendMessage = createServerFn({ method: "POST" })
   });
 
 export const uploadTerminalFile = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) =>
-    sessionSchema
-      .extend({
-        fileName: z.string().trim().min(1).max(200),
-        mimeType: z.string().max(120).default("application/octet-stream"),
-        content: z.string().max(14_000_000),
-      })
-      .parse(data),
-  )
+  .inputValidator((data: unknown) => uploadSchema.parse(data))
   .handler(async ({ data }) => {
+    const { requireMember } = await import("./terminal.server");
     const { supabaseAdmin, member } = await requireMember(data.terminalId, data.memberId);
 
     const binary = Uint8Array.from(atob(data.content), (c) => c.charCodeAt(0));
@@ -249,7 +221,7 @@ export const uploadTerminalFile = createServerFn({ method: "POST" })
     const { error } = await supabaseAdmin.storage
       .from("terminal-files")
       .upload(path, binary, { contentType: data.mimeType, upsert: false });
-    if (error) return { ok: false as const, message: "Upload failed. Try again." };
+    if (error) return { ok: false as const, message: "Upload failed. Please try again." };
 
     await supabaseAdmin.from("terminal_files").insert({
       terminal_id: data.terminalId,
@@ -268,8 +240,9 @@ export const uploadTerminalFile = createServerFn({ method: "POST" })
   });
 
 export const getFileLink = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => sessionSchema.extend({ fileId: z.string().uuid() }).parse(data))
+  .inputValidator((data: unknown) => fileLinkSchema.parse(data))
   .handler(async ({ data }) => {
+    const { requireMember } = await import("./terminal.server");
     const { supabaseAdmin } = await requireMember(data.terminalId, data.memberId);
     const { data: file } = await supabaseAdmin
       .from("terminal_files")
@@ -280,13 +253,14 @@ export const getFileLink = createServerFn({ method: "POST" })
     if (!file) return { ok: false as const, url: null };
     const { data: signed } = await supabaseAdmin.storage
       .from("terminal-files")
-      .createSignedUrl(file.storage_path, 60 * 10);
+      .createSignedUrl(file.storage_path, 600);
     return { ok: true as const, url: signed?.signedUrl ?? null };
   });
 
 export const leaveTerminal = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => sessionSchema.parse(data))
   .handler(async ({ data }) => {
+    const { requireMember } = await import("./terminal.server");
     const { supabaseAdmin, member } = await requireMember(data.terminalId, data.memberId);
     await supabaseAdmin.from("terminal_messages").insert({
       terminal_id: data.terminalId,

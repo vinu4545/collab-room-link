@@ -21,7 +21,12 @@ async function derive(password: string, salt: Uint8Array): Promise<string> {
     ["deriveBits"],
   );
   const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt: salt as unknown as BufferSource, iterations: ITERATIONS, hash: "SHA-256" },
+    {
+      name: "PBKDF2",
+      salt: salt as unknown as BufferSource,
+      iterations: ITERATIONS,
+      hash: "SHA-256",
+    },
     key,
     256,
   );
@@ -50,4 +55,16 @@ export function validatePassword(password: string): string[] {
   if (!/[A-Z]/.test(password)) errors.push("Password must contain at least one uppercase character.");
   if (!/[0-9]/.test(password)) errors.push("Password must contain at least one numeric value.");
   return errors;
+}
+
+export async function requireMember(terminalId: string, memberId: string) {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data: member } = await supabaseAdmin
+    .from("terminal_members")
+    .select("id, display_name, terminal_id")
+    .eq("id", memberId)
+    .eq("terminal_id", terminalId)
+    .maybeSingle();
+  if (!member) throw new Error("Not connected to this terminal.");
+  return { supabaseAdmin, member };
 }

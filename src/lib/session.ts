@@ -1,4 +1,4 @@
-import type { TerminalSession } from "./terminal.functions";
+import type { TerminalSession } from "./terminal.schemas";
 
 const KEY = "terminal-session";
 
