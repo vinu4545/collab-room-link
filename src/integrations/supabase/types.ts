@@ -14,7 +14,138 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      terminal_files: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_size: number
+          id: string
+          mime_type: string
+          storage_path: string
+          terminal_id: string
+          uploader: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_size?: number
+          id?: string
+          mime_type?: string
+          storage_path: string
+          terminal_id: string
+          uploader: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          id?: string
+          mime_type?: string
+          storage_path?: string
+          terminal_id?: string
+          uploader?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "terminal_files_terminal_id_fkey"
+            columns: ["terminal_id"]
+            isOneToOne: false
+            referencedRelation: "terminals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      terminal_members: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          is_owner: boolean
+          last_seen: string
+          terminal_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          id?: string
+          is_owner?: boolean
+          last_seen?: string
+          terminal_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          is_owner?: boolean
+          last_seen?: string
+          terminal_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "terminal_members_terminal_id_fkey"
+            columns: ["terminal_id"]
+            isOneToOne: false
+            referencedRelation: "terminals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      terminal_messages: {
+        Row: {
+          author: string
+          body: string
+          created_at: string
+          id: string
+          terminal_id: string
+        }
+        Insert: {
+          author: string
+          body: string
+          created_at?: string
+          id?: string
+          terminal_id: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          created_at?: string
+          id?: string
+          terminal_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "terminal_messages_terminal_id_fkey"
+            columns: ["terminal_id"]
+            isOneToOne: false
+            referencedRelation: "terminals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      terminals: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_username: string
+          password_hash: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          owner_username: string
+          password_hash: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_username?: string
+          password_hash?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
