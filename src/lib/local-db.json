@@ -1,113 +1,38 @@
 {
   "terminals": [
     {
-      "id": "75a70def-0bb6-47b9-aa2d-c9168ef7a806",
-      "name": "yashgames",
-      "owner_username": "yash",
-      "password_hash": "pbkdf2$100000$01a10e0e605e3b088a5fb7e7bb193220$c215ae05c86a5074a232086820cb0dd5ec1ce975c0bb5e72957435fba4f6a124",
-      "created_at": "2026-08-14T19:43:30.864Z"
-    },
-    {
-      "id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "name": "vinay",
-      "owner_username": "vinay",
-      "password_hash": "pbkdf2$100000$beed0dedcf88894544d080b0578dfbfb$afd6d8545ada2c42064f1008b7e1c2695b16b67da6f5b40f5cd22898dec569b2",
-      "created_at": "2026-08-14T19:45:49.599Z"
+      "id": "3b8323dd-319e-4320-97ce-69f4d9ca1acf",
+      "name": "yogeshbhai",
+      "owner_username": "yogesh",
+      "password_hash": "pbkdf2$100000$f9172b57b79e82f99e867d90725678d2$741b2b56623faa6f0dc15ec46f28ef9fb07041bbc25f79ca1612c905132d7cfd",
+      "created_at": "2026-08-14T21:04:27.744Z"
     }
   ],
   "members": [
     {
-      "id": "ab771a4f-8574-4f57-a48c-8e5d251c1cbd",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "display_name": "vinay",
+      "id": "749e5bf8-9067-4b4a-a206-23880434be0e",
+      "terminal_id": "3b8323dd-319e-4320-97ce-69f4d9ca1acf",
+      "display_name": "yogesh",
       "is_owner": true,
-      "last_seen": "2026-08-14T19:48:17.729Z",
-      "created_at": "2026-08-14T19:45:49.619Z"
-    },
-    {
-      "id": "b8da8379-7e98-4563-94e4-3b0dd8ae0a36",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "display_name": "riya",
-      "is_owner": false,
-      "last_seen": "2026-08-14T19:48:10.986Z",
-      "created_at": "2026-08-14T19:46:18.450Z"
+      "last_seen": "2026-08-14T21:09:19.971Z",
+      "created_at": "2026-08-14T21:04:27.957Z"
     }
   ],
   "messages": [
     {
-      "id": "e59d1d03-5bd7-452e-863c-52e50bdbf2e2",
-      "terminal_id": "75a70def-0bb6-47b9-aa2d-c9168ef7a806",
+      "id": "5b2d78af-a121-4296-b550-2c3d04219074",
+      "terminal_id": "3b8323dd-319e-4320-97ce-69f4d9ca1acf",
       "author": "system",
-      "body": "yash created the terminal \"yashgames\".",
-      "created_at": "2026-08-14T19:43:30.897Z"
+      "body": "yogesh created the terminal \"yogeshbhai\".",
+      "created_at": "2026-08-14T21:04:28.528Z"
     },
     {
-      "id": "464f769b-a1c2-4b73-8277-40cca1a941b3",
-      "terminal_id": "75a70def-0bb6-47b9-aa2d-c9168ef7a806",
-      "author": "yash",
-      "body": "what the hell are u doing",
-      "created_at": "2026-08-14T19:44:15.671Z"
-    },
-    {
-      "id": "95735df8-a068-4362-bab2-75e57adc2786",
-      "terminal_id": "75a70def-0bb6-47b9-aa2d-c9168ef7a806",
-      "author": "system",
-      "body": "yash disconnected.",
-      "created_at": "2026-08-14T19:45:18.328Z"
-    },
-    {
-      "id": "636a62b4-efe8-40e2-a91e-5e2ab7d8708f",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "system",
-      "body": "vinay created the terminal \"vinay\".",
-      "created_at": "2026-08-14T19:45:49.639Z"
-    },
-    {
-      "id": "279ad2bb-2b30-42ed-9496-0434c7d3e2a9",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "vinay",
-      "body": "hii",
-      "created_at": "2026-08-14T19:46:03.278Z"
-    },
-    {
-      "id": "ba034978-3a8c-434f-a0c4-33a4964abff3",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "system",
-      "body": "riya connected to the terminal.",
-      "created_at": "2026-08-14T19:46:18.469Z"
-    },
-    {
-      "id": "961e44f9-3a15-4340-989b-90f6c9d1fa99",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "riya",
-      "body": "how are u",
-      "created_at": "2026-08-14T19:46:24.738Z"
-    },
-    {
-      "id": "06a58ff7-4933-4bc8-83c9-cd55d71785fb",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "vinay",
-      "body": "i am fine",
-      "created_at": "2026-08-14T19:46:30.936Z"
-    },
-    {
-      "id": "08b7f294-d5ae-42e4-a077-a70f755b13e4",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "author": "system",
-      "body": "vinay uploaded ThirdPersonShooter.unitypackage.",
-      "created_at": "2026-08-14T19:46:52.341Z"
+      "id": "94ac0087-49c9-4557-9cdb-df4cbaeace56",
+      "terminal_id": "3b8323dd-319e-4320-97ce-69f4d9ca1acf",
+      "author": "yogesh",
+      "body": "ewww",
+      "created_at": "2026-08-14T21:04:43.832Z"
     }
   ],
-  "files": [
-    {
-      "id": "525e56da-e7f1-4beb-9caa-3fe26ef5c2eb",
-      "terminal_id": "0de38bc1-4f97-40de-b960-6a732bdd427f",
-      "uploader": "vinay",
-      "file_name": "ThirdPersonShooter.unitypackage",
-      "file_size": 2235461,
-      "mime_type": "application/octet-stream",
-      "storage_path": "/uploads/0de38bc1-4f97-40de-b960-6a732bdd427f/ac30fd16-448f-43c9-997c-9ae9f91e5ef9-ThirdPersonShooter.unitypackage",
-      "created_at": "2026-08-14T19:46:52.076Z"
-    }
-  ]
+  "files": []
 }
