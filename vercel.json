@@ -16,12 +16,17 @@
             "src": "/(.*)",
             "dest": "/index.html"
         }
-    ]
-    ,
+    ],
     "rewrites": [
-        { "source": "/(.*)", "destination": "/index.html" }
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
     ],
     "probes": [
-        { "path": "/", "mustContain": "<title>" }
+        {
+            "path": "/",
+            "mustContain": "<title>"
+        }
     ]
 }
