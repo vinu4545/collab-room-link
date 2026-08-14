@@ -4,7 +4,7 @@
             "src": "package.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": ".output/public"
+                "distDir": "dist"
             }
         }
     ],
@@ -16,5 +16,12 @@
             "src": "/(.*)",
             "dest": "/index.html"
         }
+    ]
+    ,
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/index.html" }
+    ],
+    "probes": [
+        { "path": "/", "mustContain": "<title>" }
     ]
 }
