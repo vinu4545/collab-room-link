@@ -58,13 +58,17 @@ export function validatePassword(password: string): string[] {
 }
 
 export async function requireMember(terminalId: string, memberId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data: member } = await supabaseAdmin
-    .from("terminal_members")
-    .select("id, display_name, terminal_id")
-    .eq("id", memberId)
-    .eq("terminal_id", terminalId)
-    .maybeSingle();
+  // Validate member against local JSON storage for development.
+  // Supabase path commented out to avoid env errors during local runs.
+  // const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  // const { data: member } = await supabaseAdmin
+  //   .from("terminal_members")
+  //   .select("id, display_name, terminal_id")
+  //   .eq("id", memberId)
+  //   .eq("terminal_id", terminalId)
+  //   .maybeSingle();
+  const { getMember } = await import("./localStorage.server");
+  const member = await getMember(terminalId, memberId);
   if (!member) throw new Error("Not connected to this terminal.");
-  return { supabaseAdmin, member };
+  return { supabaseAdmin: null, member } as any;
 }
