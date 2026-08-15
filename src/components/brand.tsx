@@ -1,9 +1,11 @@
+import type { ReactNode } from "react";
+
 import logo from "@/assets/logo.png.asset.json";
 
 export function Logo({ size = 44 }: { size?: number }) {
   return (
     <span
-      className="inline-flex items-center justify-center rounded-2xl bg-foreground p-2"
+      className="inline-flex items-center justify-center rounded-2xl bg-logo-tile p-2 shadow-sm ring-1 ring-border"
       style={{ width: size, height: size }}
     >
       <img src={logo.url} alt="Terminal workspace logo" className="h-full w-full object-contain" />
@@ -11,9 +13,9 @@ export function Logo({ size = 44 }: { size?: number }) {
   );
 }
 
-export function BrandHeader({ subtitle }: { subtitle?: string }) {
+export function BrandHeader({ subtitle, action }: { subtitle?: string; action?: ReactNode }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center gap-3 ${action ? "w-full" : ""}`}>
       <Logo />
       <div className="leading-tight">
         <p className="text-sm font-semibold tracking-[0.28em] text-foreground uppercase">
@@ -23,6 +25,7 @@ export function BrandHeader({ subtitle }: { subtitle?: string }) {
           {subtitle ?? "Terminal Workspace"}
         </p>
       </div>
+      {action ? <div className="ml-auto flex items-center gap-2">{action}</div> : null}
     </div>
   );
 }
