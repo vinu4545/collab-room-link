@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { BrandHeader } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { clearSession, readSession } from "@/lib/session";
@@ -178,7 +179,8 @@ function Workspace({ session }: { session: TerminalSession }) {
         <div className="flex items-center gap-4">
           <BrandHeader subtitle={session.terminalName} />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <ThemeToggle />
           <span className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1.5 text-xs font-medium text-success">
             <span className="h-2 w-2 rounded-full bg-success" />
             Connected to {session.terminalName}

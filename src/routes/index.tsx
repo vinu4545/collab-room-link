@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Link2, Plus, Sparkles } from "lucide-react";
 
 import { BrandHeader } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-provider";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/")({
 function Welcome() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5 py-8">
-      <BrandHeader />
+      <BrandHeader action={<ThemeToggle />} />
 
       <section className="flex flex-1 flex-col justify-center py-12">
         <div className="max-w-2xl">
