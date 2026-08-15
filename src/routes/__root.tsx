@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { ThemeProvider, themeInitScript } from "../components/theme-provider";
+import { ThemeProvider, themeInitScript, useTheme } from "../components/theme-provider";
 
 
 function NotFoundComponent() {
@@ -131,9 +131,14 @@ function RootComponent() {
       <ThemeProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
-        <Toaster position="top-center" richColors />
+        <ThemedToaster />
       </ThemeProvider>
     </QueryClientProvider>
   );
 }
 
+
+function ThemedToaster() {
+  const { theme } = useTheme();
+  return <Toaster position="top-center" richColors theme={theme} closeButton />;
+}
