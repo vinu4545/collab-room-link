@@ -47,6 +47,10 @@ export const Route = createFileRoute("/workspace")({
   component: WorkspacePage,
 });
 
+type WsMessage = { id: string; author: string; body: string; created_at: string };
+type WsMember = { id: string; display_name: string; is_owner: boolean; online: boolean };
+type WsFile = { id: string; uploader: string; file_name: string; file_size: number };
+
 function formatSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -191,7 +195,7 @@ function Workspace({ session }: { session: TerminalSession }) {
             Shared chat
           </h2>
           <div ref={scroller} className="mt-4 flex-1 space-y-3 overflow-y-auto pr-1">
-            {(data?.messages ?? []).map((message) =>
+            {((data?.messages ?? []) as WsMessage[]).map((message) =>
               message.author === "system" ? (
                 <p key={message.id} className="text-center text-xs text-muted-foreground">
                   {message.body}
@@ -263,7 +267,7 @@ function Workspace({ session }: { session: TerminalSession }) {
               <Users className="h-4 w-4" /> Connected users
             </h2>
             <ul className="mt-3 space-y-2">
-              {(data?.members ?? []).map((member) => (
+              {((data?.members ?? []) as WsMember[]).map((member) => (
                 <li key={member.id} className="flex items-center gap-2 text-sm text-foreground">
                   <span
                     className={`h-2 w-2 rounded-full ${member.online ? "bg-success" : "bg-border"}`}
@@ -289,7 +293,7 @@ function Workspace({ session }: { session: TerminalSession }) {
               </p>
             ) : (
               <ul className="mt-3 space-y-2">
-                {(data?.files ?? []).map((file) => (
+                {((data?.files ?? []) as WsFile[]).map((file) => (
                   <li
                     key={file.id}
                     className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card/70 px-3 py-2"

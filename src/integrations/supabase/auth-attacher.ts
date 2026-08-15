@@ -5,7 +5,7 @@ import { createMiddleware } from '@tanstack/react-start'
 export const attachSupabaseAuth = createMiddleware({ type: 'function' }).client(
   async ({ next }) => {
     try {
-      const VITE_KEY = import.meta.env?.VITE_SUPABASE_PUBLISHABLE_KEY;
+      const VITE_KEY = import.meta.env?.['VITE_SUPABASE_PUBLISHABLE_KEY'];
       if (!VITE_KEY) return next({ headers: {} });
       const { supabase } = await import('./client');
       const { data } = await supabase.auth.getSession();

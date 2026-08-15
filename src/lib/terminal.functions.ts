@@ -257,7 +257,7 @@ export const getWorkspace = createServerFn({ method: "POST" })
       const cutoff = Date.now() - 60_000;
       return {
         terminal: terminal.data,
-        members: (members.data ?? []).map((m) => ({
+        members: (members.data ?? []).map((m: { id: string; display_name: string; is_owner: boolean; last_seen: string }) => ({
           id: m.id,
           display_name: m.display_name,
           is_owner: m.is_owner,
@@ -274,7 +274,7 @@ export const getWorkspace = createServerFn({ method: "POST" })
     const cutoff = Date.now() - 60_000;
     return {
       terminal,
-      members: (members ?? []).map((m) => ({
+      members: (members ?? []).map((m: { id: string; display_name: string; is_owner: boolean; last_seen: string }) => ({
         id: m.id,
         display_name: m.display_name,
         is_owner: m.is_owner,
