@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { BrandHeader } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -65,7 +66,7 @@ function JoinPage() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col px-5 py-8">
-      <BrandHeader subtitle="Terminal Access" />
+      <BrandHeader subtitle="Terminal Access" action={<ThemeToggle />} />
 
       <div className="flex flex-1 flex-col justify-center">
         <Link

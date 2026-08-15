@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { BrandHeader } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { clearSession, readSession } from "@/lib/session";
@@ -46,6 +47,10 @@ export const Route = createFileRoute("/workspace")({
   }),
   component: WorkspacePage,
 });
+
+type WsMessage = { id: string; author: string; body: string; created_at: string };
+type WsMember = { id: string; display_name: string; is_owner: boolean; online: boolean };
+type WsFile = { id: string; uploader: string; file_name: string; file_size: number };
 
 function formatSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
@@ -174,7 +179,8 @@ function Workspace({ session }: { session: TerminalSession }) {
         <div className="flex items-center gap-4">
           <BrandHeader subtitle={session.terminalName} />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <ThemeToggle />
           <span className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1.5 text-xs font-medium text-success">
             <span className="h-2 w-2 rounded-full bg-success" />
             Connected to {session.terminalName}
@@ -191,7 +197,7 @@ function Workspace({ session }: { session: TerminalSession }) {
             Shared chat
           </h2>
           <div ref={scroller} className="mt-4 flex-1 space-y-3 overflow-y-auto pr-1">
-            {(data?.messages ?? []).map((message) =>
+            {((data?.messages ?? []) as WsMessage[]).map((message) =>
               message.author === "system" ? (
                 <p key={message.id} className="text-center text-xs text-muted-foreground">
                   {message.body}
@@ -263,7 +269,7 @@ function Workspace({ session }: { session: TerminalSession }) {
               <Users className="h-4 w-4" /> Connected users
             </h2>
             <ul className="mt-3 space-y-2">
-              {(data?.members ?? []).map((member) => (
+              {((data?.members ?? []) as WsMember[]).map((member) => (
                 <li key={member.id} className="flex items-center gap-2 text-sm text-foreground">
                   <span
                     className={`h-2 w-2 rounded-full ${member.online ? "bg-success" : "bg-border"}`}
@@ -289,7 +295,7 @@ function Workspace({ session }: { session: TerminalSession }) {
               </p>
             ) : (
               <ul className="mt-3 space-y-2">
-                {(data?.files ?? []).map((file) => (
+                {((data?.files ?? []) as WsFile[]).map((file) => (
                   <li
                     key={file.id}
                     className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card/70 px-3 py-2"

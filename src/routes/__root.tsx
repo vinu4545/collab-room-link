@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ThemeProvider, themeInitScript, useTheme } from "../components/theme-provider";
 
 
 function NotFoundComponent() {
@@ -109,9 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         {children}
@@ -126,10 +128,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <Toaster position="top-center" richColors />
+      <ThemeProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <ThemedToaster />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
 
+
+function ThemedToaster() {
+  const { theme } = useTheme();
+  return <Toaster position="top-center" richColors theme={theme} closeButton />;
+}

@@ -1,32 +1,25 @@
 {
-    "builds": [
-        {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "dist"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "handle": "filesystem"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
-        }
-    ],
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist/client",
+    "cleanUrls": true,
     "rewrites": [
         {
-            "source": "/(.*)",
+            "source": "/((?!assets/|_build/|favicon\\.png|robots\\.txt).*)",
             "destination": "/index.html"
         }
     ],
-    "probes": [
+    "headers": [
         {
-            "path": "/",
-            "mustContain": "<title>"
+            "source": "/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
         }
     ]
 }

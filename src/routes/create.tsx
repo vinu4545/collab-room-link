@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { BrandHeader } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -112,7 +113,7 @@ function CreatePage() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col px-5 py-8">
-      <BrandHeader subtitle="New Terminal" />
+      <BrandHeader subtitle="New Terminal" action={<ThemeToggle />} />
 
       <div className="flex flex-1 flex-col justify-center py-8">
         <Link
