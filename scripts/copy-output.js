@@ -35,13 +35,17 @@ async function generateIndexHtml(destDir) {
         // ignore
     }
 
-    const title = 'Chat Terminal';
+    const title = 'Terminal Workspace';
+    const themeScript = `(function(){try{var k="terminal-theme";var s=localStorage.getItem(k);var m=window.matchMedia("(prefers-color-scheme: dark)").matches;var t=s==="light"||s==="dark"?s:(m?"dark":"light");var e=document.documentElement;e.classList.toggle("dark",t==="dark");e.style.colorScheme=t;}catch(e){}})();`;
     const html = `<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>${title}</title>
+        <meta name="description" content="Create or join a private terminal to chat and share practical files instantly." />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <script>${themeScript}</script>
         ${css ? `<link rel="stylesheet" href="${css}" />` : ''}
     </head>
     <body>
