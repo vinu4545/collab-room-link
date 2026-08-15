@@ -2,12 +2,12 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { _ as useRouter, c as HeadContent, d as Outlet, f as lazyRouteComponent, h as Link, m as createRootRouteWithContext, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { i as require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
-import { i as __exportAll } from "./server-BuxZqWsF.mjs";
+import { i as __exportAll } from "./server-DGdO6ilc.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { r as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { t as Toaster } from "../_libs/sonner.mjs";
 import { l as Moon, r as Sun } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-1AR1Yh9r.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-CcGjaGz8.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var styles_default = "/assets/styles-D_NG67n4.css";
@@ -247,7 +247,7 @@ function ThemedToaster() {
 		closeButton: true
 	});
 }
-var $$splitComponentImporter$3 = () => import("./routes-BUtBwJi1.mjs");
+var $$splitComponentImporter$3 = () => import("./routes-C6ovRV26.mjs");
 var Route$3 = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "Terminal Workspace — Create or Join a Study Terminal" },
@@ -274,7 +274,7 @@ var Route$3 = createFileRoute("/")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-var $$splitComponentImporter$2 = () => import("./create-CNSeFVAF.mjs");
+var $$splitComponentImporter$2 = () => import("./create-eC0mEAZa.mjs");
 var Route$2 = createFileRoute("/create")({
 	head: () => ({ meta: [
 		{ title: "Create New Terminal — Terminal Workspace" },
@@ -301,7 +301,7 @@ var Route$2 = createFileRoute("/create")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-var $$splitComponentImporter$1 = () => import("./join-a1kN_IJv.mjs");
+var $$splitComponentImporter$1 = () => import("./join-IwZK3f74.mjs");
 var Route$1 = createFileRoute("/join")({
 	head: () => ({ meta: [
 		{ title: "Join Existing Terminal — Terminal Workspace" },
@@ -328,7 +328,7 @@ var Route$1 = createFileRoute("/join")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./workspace-CvYq45C6.mjs");
+var $$splitComponentImporter = () => import("./workspace-Cm4VwVGi.mjs");
 var Route = createFileRoute("/workspace")({
 	ssr: false,
 	head: () => ({ meta: [

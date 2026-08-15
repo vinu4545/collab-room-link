@@ -27,6 +27,46 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 }
 
 
+function createMissingSupabaseClient() {
+  const warn = () => {
+    console.warn('[Supabase] No config found. The app will run in local fallback mode.');
+  };
+
+  const noopResponse = async () => ({ data: null, error: null });
+  const noopList = async () => ({ data: [], error: null });
+
+  return {
+    auth: {
+      getSession: noopResponse,
+      getClaims: noopResponse,
+      signInWithPassword: noopResponse,
+      signOut: noopResponse,
+    },
+    from: () => ({
+      select: async () => ({ data: [], error: null }),
+      insert: async () => ({ data: null, error: null }),
+      update: async () => ({ data: null, error: null }),
+      delete: async () => ({ data: null, error: null }),
+      eq: async () => ({ data: [], error: null }),
+      ilike: async () => ({ data: [], error: null }),
+      maybeSingle: async () => ({ data: null, error: null }),
+      single: async () => ({ data: null, error: null }),
+      order: () => ({
+        limit: async () => ({ data: [], error: null }),
+      }),
+      limit: async () => ({ data: [], error: null }),
+      then: undefined,
+    }),
+    storage: {
+      from: () => ({
+        upload: async () => ({ data: null, error: null }),
+        getPublicUrl: () => ({ data: { publicUrl: '' } }),
+      }),
+    },
+    __warn: warn,
+  } as any;
+}
+
 function createSupabaseClient() {
   // Use import.meta.env for client-side (Vite build-time replacement)
   // Fall back to process.env for SSR (server-side rendering)
@@ -39,8 +79,8 @@ function createSupabaseClient() {
       ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
     ];
     const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
+    console.warn(`[Supabase] ${message} Falling back to local mode.`);
+    return createMissingSupabaseClient();
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {

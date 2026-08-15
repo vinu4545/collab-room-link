@@ -1,9 +1,9 @@
 import { h as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { i as require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { f as Link2, g as ArrowRight, i as Sparkles, s as Plus } from "../_libs/lucide-react.mjs";
-import { n as ThemeToggle } from "./router-1AR1Yh9r.mjs";
+import { n as ThemeToggle } from "./router-CcGjaGz8.mjs";
 import { t as BrandHeader } from "./brand-DGxqtOla.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-BUtBwJi1.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-C6ovRV26.js
 var import_jsx_runtime = require_jsx_runtime();
 function Welcome() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {

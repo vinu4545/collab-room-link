@@ -1,6 +1,6 @@
-import { n as createCsrfMiddleware, r as createMiddleware } from "./server-BuxZqWsF.mjs";
+import { n as createCsrfMiddleware, r as createMiddleware } from "./server-DGdO6ilc.mjs";
 import { t as renderErrorPage } from "./ssr.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/start-BMO8oxMu.js
+//#region node_modules/.nitro/vite/services/ssr/assets/start-B5f350eY.js
 function dedupeSerializationAdapters(deduped, serializationAdapters) {
 	for (let i = 0, len = serializationAdapters.length; i < len; i++) {
 		const current = serializationAdapters[i];
@@ -43,7 +43,7 @@ var attachSupabaseAuth = createMiddleware({ type: "function" }).client(async ({ 
 			"VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_lvxLGTrDEj4dVlPyKnTVxw_wxL6tWrs",
 			"VITE_SUPABASE_URL": "https://rgjnmyafehqmwawqipit.supabase.co"
 		}["VITE_SUPABASE_PUBLISHABLE_KEY"]) return next({ headers: {} });
-		const { supabase } = await import("./client-C5hFSrNL.mjs");
+		const { supabase } = await import("./client-Dk1QnQZF.mjs");
 		const { data } = await supabase.auth.getSession();
 		const token = data.session?.access_token;
 		return next({ headers: token ? { Authorization: `Bearer ${token}` } : {} });

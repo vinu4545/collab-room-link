@@ -2,13 +2,13 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { g as useNavigate } from "../_libs/@tanstack/react-router+[...].mjs";
 import { i as require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
-import { f as sendMessage, l as leaveTerminal, m as useServerFn, n as Input, o as getFileLink, p as uploadTerminalFile, r as clearSession, s as getWorkspace, t as Button, u as readSession } from "./terminal.functions-pwRqEwsX.mjs";
+import { f as sendMessage, l as leaveTerminal, m as useServerFn, n as Input, o as getFileLink, p as uploadTerminalFile, r as clearSession, s as getWorkspace, t as Button, u as readSession } from "./terminal.functions-BzI5Ij5J.mjs";
 import { i as useQueryClient, n as useQuery, t as useMutation } from "../_libs/tanstack__react-query.mjs";
 import { n as toast } from "../_libs/sonner.mjs";
 import { c as Paperclip, d as LoaderCircle, m as Download, n as Users, o as Send, p as FileText, u as LogOut } from "../_libs/lucide-react.mjs";
-import { n as ThemeToggle } from "./router-1AR1Yh9r.mjs";
+import { n as ThemeToggle } from "./router-CcGjaGz8.mjs";
 import { t as BrandHeader } from "./brand-DGxqtOla.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/workspace-CvYq45C6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/workspace-Cm4VwVGi.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function formatSize(bytes) {

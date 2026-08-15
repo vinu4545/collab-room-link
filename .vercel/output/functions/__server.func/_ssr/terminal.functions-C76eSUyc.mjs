@@ -1,6 +1,6 @@
-import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BuxZqWsF2.mjs";
+import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-DGdO6ilc2.mjs";
 import { a as sessionSchema, i as messageSchema, n as fileLinkSchema, o as uploadSchema, r as joinSchema, s as usernameSchema, t as createSchema } from "./terminal.schemas-BU5-cy6k.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/terminal.functions-D3D3cSiM.js
+//#region node_modules/.nitro/vite/services/ssr/assets/terminal.functions-C76eSUyc.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {

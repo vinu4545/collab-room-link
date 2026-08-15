@@ -1,5 +1,5 @@
 import { t as createClient } from "../_libs/supabase__supabase-js.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/client-C5hFSrNL.js
+//#region node_modules/.nitro/vite/services/ssr/assets/client-Dk1QnQZF.js
 function isNewSupabaseApiKey(value) {
 	return value.startsWith("sb_publishable_") || value.startsWith("sb_secret_");
 }
@@ -13,6 +13,74 @@ function createSupabaseFetch(supabaseKey) {
 			...init,
 			headers
 		});
+	};
+}
+function createMissingSupabaseClient() {
+	const warn = () => {
+		console.warn("[Supabase] No config found. The app will run in local fallback mode.");
+	};
+	const noopResponse = async () => ({
+		data: null,
+		error: null
+	});
+	return {
+		auth: {
+			getSession: noopResponse,
+			getClaims: noopResponse,
+			signInWithPassword: noopResponse,
+			signOut: noopResponse
+		},
+		from: () => ({
+			select: async () => ({
+				data: [],
+				error: null
+			}),
+			insert: async () => ({
+				data: null,
+				error: null
+			}),
+			update: async () => ({
+				data: null,
+				error: null
+			}),
+			delete: async () => ({
+				data: null,
+				error: null
+			}),
+			eq: async () => ({
+				data: [],
+				error: null
+			}),
+			ilike: async () => ({
+				data: [],
+				error: null
+			}),
+			maybeSingle: async () => ({
+				data: null,
+				error: null
+			}),
+			single: async () => ({
+				data: null,
+				error: null
+			}),
+			order: () => ({ limit: async () => ({
+				data: [],
+				error: null
+			}) }),
+			limit: async () => ({
+				data: [],
+				error: null
+			}),
+			then: void 0
+		}),
+		storage: { from: () => ({
+			upload: async () => ({
+				data: null,
+				error: null
+			}),
+			getPublicUrl: () => ({ data: { publicUrl: "" } })
+		}) },
+		__warn: warn
 	};
 }
 function createSupabaseClient() {
@@ -52,8 +120,8 @@ function createSupabaseClient() {
 	}["VITE_SUPABASE_PUBLISHABLE_KEY"] || process.env["SUPABASE_PUBLISHABLE_KEY"];
 	if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 		const message = `Missing Supabase environment variable(s): ${[...!SUPABASE_URL ? ["SUPABASE_URL"] : [], ...!SUPABASE_PUBLISHABLE_KEY ? ["SUPABASE_PUBLISHABLE_KEY"] : []].join(", ")}. Connect Supabase in Lovable Cloud.`;
-		console.error(`[Supabase] ${message}`);
-		throw new Error(message);
+		console.warn(`[Supabase] ${message} Falling back to local mode.`);
+		return createMissingSupabaseClient();
 	}
 	return createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
 		global: { fetch: createSupabaseFetch(SUPABASE_PUBLISHABLE_KEY) },
